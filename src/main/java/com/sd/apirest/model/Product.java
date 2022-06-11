@@ -1,8 +1,9 @@
 package com.sd.apirest.model;
 
-import org.springframework.hateoas.RepresentationModel;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Product extends RepresentationModel<Product> {
+@Document("Producto")
+public class Product {
     private String id;
     private String name;
     private String description;

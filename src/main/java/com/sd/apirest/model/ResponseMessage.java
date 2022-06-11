@@ -1,4 +1,4 @@
-package ejercicio3.model;
+package com.sd.apirest.model;
 
 public class ResponseMessage {
     private String message;
