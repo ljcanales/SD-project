@@ -2,16 +2,16 @@ package com.sd.apirest.controllers;
 
 import com.sd.apirest.dao.ProductDAO;
 import com.sd.apirest.model.Product;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
 import com.sd.apirest.model.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class ProductController {
@@ -60,12 +60,13 @@ public class ProductController {
             return new ResponseEntity<>(new ResponseMessage("Product not found."), HttpStatus.NOT_FOUND);
         }
         productDAO.deleteById(productId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("Product has been deleted."), HttpStatus.OK);
     }
 
     private EntityModel<Product> getEntity(Product product) {
         EntityModel<Product> productResource = EntityModel.of(product);
         productResource.add(linkTo(methodOn(ProductController.class).getProduct(product.getId())).withSelfRel());
+        productResource.add(linkTo(methodOn(ProviderController.class).getProvider(product.getProvider())).withRel("provider"));
         return productResource;
     }
 }

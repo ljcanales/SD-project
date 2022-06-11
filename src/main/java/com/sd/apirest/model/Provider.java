@@ -1,16 +1,28 @@
 package com.sd.apirest.model;
 
-public class Proveedor {
-    String nombre;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("Proveedor")
+public class Provider {
+    String id;
+    String name;
     String cuit;
     String email;
 
-    public String getNombre() {
-        return nombre;
+    public String getId() {
+        return id;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCuit() {
