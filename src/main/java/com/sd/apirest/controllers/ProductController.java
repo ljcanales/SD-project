@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -18,6 +21,16 @@ public class ProductController {
 
     @Autowired
     ProductDAO productDAO;
+
+    @GetMapping("/products")
+    public HttpEntity<?> getAllProducts() {
+        List<Product> products = productDAO.findAll();
+        List<EntityModel<Product>> productsModel = new ArrayList<>();
+        for (Product product : products) {
+            productsModel.add(getEntity(product));
+        }
+        return new ResponseEntity<>(productsModel, HttpStatus.OK);
+    }
 
     @GetMapping("/product/{id}")
     public HttpEntity<?> getProduct(@PathVariable(name = "id") String productId) {
